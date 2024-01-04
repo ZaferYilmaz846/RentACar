@@ -1,0 +1,324 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+@using RentACar_MVC_UI.Models.Dtos;
+@using RentACar_MVC_UI.Models.Entities
+@model VehicleModelView
+
+<link rel="stylesheet" href="~/areas/plugins/jquery/jquery.min.map">
+<link rel="stylesheet" href="~/areas/plugins/jquery/jquery.slim.min.map">
+
+
+
+
+<div class="container">
+    <div class="row" style="padding-top:20px">
+        <div class="col-2">
+            <a href="#" class="btn btn-outline-primary rounded-pill waves-effect waves-light" data-toggle="modal" data-target="#divNewVehicleModelForm">Yeni Araç Ekle</a>
+        </div>
+        <div class="col-2">
+            <a href="#" class="btn btn-outline-warning rounded-pill waves-effect waves-light" data-toggle="modal" data-target="#divUpdateVehicleModelForm">Araç Güncelle</a>
+        </div>
+        <div class="col-2">
+            <a href="#" class="btn btn-outline-danger rounded-pill waves-effect waves-light" data-toggle="modal" data-target="#divDeleteVehicleModelForm">Araç Sil</a>
+        </div>
+    </div>
+    <div class="row" style="margin-top:10px">
+        @foreach (var item in Model.VehicleModels)
+        {
+            <div class="col-md-4" style="margin-top:20px">
+                <div class="card" style="width: 18rem;">
+                    <img src="~/images/Vehicles.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <tr>
+                                <td style="font-weight:bold">Araç Markası</td>
+                                <td>@item.BrandName</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Araç Modeli</td>
+                                <td>@item.ModelName</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Üretim Yılı</td>
+                                <td>@item.Year</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Yakıt Türü</td>
+                                <td>@item.FuelOil</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Vites Tipi</td>
+                                <td>@item.Transmission</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Günlük Ücreti</td>
+                                <td>@item.PerDayPrice</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="divNewVehicleModelForm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Yeni Araç Ekleme</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="VehicleBrand">Araç Markası</label>
+                        <select class="custom-select form-control-border" id="ddlVehicleBrands">
+                            @foreach (var item in Model.VehicleBrands)
+                            {
+                                <option value="@item.BrandID">@item.BrandName</option>
+                            }
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="VehicleModel">Araç Modeli</label>
+                        <input type="text" class="form-control" id="txtVehicleModelName" placeholder="Araç Modelini Giriniz...">
+                    </div>
+                    <div class="form-group">
+                        <label for="VehicleYear">Üretim Yılı</label>
+                        <input type="number" class="form-control" id="nmbYear" placeholder="Üretim Yılını Giriniz...">
+                    </div>
+                    <div class="form-group">
+                        <label for="VehicleFuelOil">Yakıt Türü</label>
+                        <select class="custom-select form-control-border" id="ddlVehicleFuelOil">
+                            <option>Benzin</option>
+                            <option>Dizel</option>
+                            <option>Hibrit</option>
+                            <option>Elektrikli</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="VehicleTransmission">Vites Tipi</label>
+                        <select class="custom-select form-control-border" id="ddlVehicleTransmission">
+                            <option>Otomatik</option>
+                            <option>Yarı Otomatik</option>
+                            <option>Manuel</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="PerDayPrice">Günlük Ücreti</label>
+                        <input type="number" class="form-control" id="nmbPerDayPrice" placeholder="Günlük Ücreti Giriniz...">
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                <button id="btnSave" type="button" class="btn btn-primary">Kaydet</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="divUpdateVehicleModelForm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Araç Güncelleme</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="VehicleBrand">Güncellenecek Araç</label>
+                        <select class="custom-select form-control-border" id="ddlUpdatedVehicleModels" style="border-bottom-color:#495057;border-bottom-style:double;border-width:3px;width:%100; margin-bottom:25px">
+                            @foreach (var item in Model.VehicleModels)
+                            {
+                                <option type="option" value="@item.ModelID">@item.BrandName / @item.ModelName / @item.Year / @item.FuelOil / @item.Transmission / @item.PerDayPrice</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="VehicleBrand">Güncel Araç Markası</label>
+                        <select class="custom-select form-control-border" id="ddlUpdatedVehicleBrands">
+                            @foreach (var item in Model.VehicleBrands)
+                            {
+                                <option value="@item.BrandID">@item.BrandName</option>
+                            }
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="VehicleModel">Güncel Araç Modeli</label>
+                        <input type="text" class="form-control" id="txtUpdatedVehicleModelName" placeholder="Araç Modelini Giriniz...">
+                    </div>
+                    <div class="form-group">
+                        <label for="VehicleYear">Güncel Üretim Yılı</label>
+                        <input type="number" class="form-control" id="txtUpdatedYear" placeholder="Üretim Yılını Giriniz...">
+                    </div>
+                    <div class="form-group">
+                        <label for="VehicleFuelOil">Güncel Yakıt Türü</label>
+                        <select class="custom-select form-control-border" id="ddlUpdatedVehicleFuelOil">
+                            <option>Benzin</option>
+                            <option>Dizel</option>
+                            <option>Hibrit</option>
+                            <option>Elektrikli</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="VehicleTransmission">Güncel Vites Tipi</label>
+                        <select class="custom-select form-control-border" id="ddlUpdatedVehicleTransmission">
+                            <option>Otomatik</option>
+                            <option>Yarı Otomatik</option>
+                            <option>Manuel</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="PerDayPrice">Güncel Günlük Ücret</label>
+                        <input type="number" class="form-control" id="txtUpdatedPerDayPrice" placeholder="Yeni Günlük Ücreti Giriniz...">
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                <button id="btnUpdate" type="button" class="btn btn-warning">Güncelle</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="divDeleteVehicleModelForm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Araç Silme</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="VehicleDetails">Silinecek Araç</label>
+                        <select class="custom-select form-control-border" id="ddlDeletedVehicleDetails">
+                            @foreach (var item in Model.VehicleModels)
+                            {
+                                <option value="@item.ModelID">@item.BrandName / @item.ModelName / @item.Year / @item.FuelOil / @item.Transmission / @item.PerDayPrice</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                <button id="btnDelete" type="button" class="btn btn-danger">Sil</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+<script src="~/areas/plugins/jquery/jquery.min.js"></script>
+<script src="~/areas/plugins/jquery/jquery.slim.min.js"></script>
+<script src="~/areas/plugins/jquery/jquery.slim.js"></script>
+<script src="~/areas/plugins/jquery/jquery.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $("#btnSave").click(function () {
+            var formData = {
+                BrandID: $("#ddlVehicleBrands").val(),
+                ModelName: $("#txtVehicleModelName").val(),
+                Year: $("#nmbYear").val(),
+                FuelOil: $("#ddlVehicleFuelOil").val(),
+                Transmission: $("#ddlVehicleTransmission").val(),
+                PerDayPrice: $("#nmbPerDayPrice").val()
+            }
+
+            $.ajax({
+                url: "/Admin/VehicleModel/Insert",
+                method: "post",
+                dataType: "json",
+                data: { dto: formData },
+                success: function (response) {
+                    if (response.isSuccess) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Araç Ekleme İşlemi Başarılı',
+                            text: response.message
+                        })
+                    }
+                }
+            });
+        });
+
+
+        $("#btnUpdate").click(function () {
+            var updatedVehicle = {
+                ModelID: $("#ddlUpdatedVehicleModels").val(),
+                BrandID: $("#ddlUpdatedVehicleBrands").val(),
+                ModelName: $("#txtUpdatedVehicleModelName").val(),
+                Year: $("#txtUpdatedYear").val(),
+                FuelOil: $("#ddlUpdatedVehicleFuelOil").val(),
+                Transmission: $("#ddlUpdatedVehicleTransmission").val(),
+                PerDayPrice: $("#txtUpdatedPerDayPrice").val()
+            }
+
+            $.ajax({
+                url: "/Admin/VehicleModel/Update",
+                method: "post",
+                dataType: "json",
+                data: { udto: updatedVehicle },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Araç Güncelleme İşlemi Başarılı',
+                        text: response.message
+                    })
+                }
+            });
+        });
+
+
+        $("#btnDelete").click(function () {
+            var deletedVehicle = {
+                ModelID: $("#ddlDeletedVehicleDetails").val()
+            }
+
+            $.ajax({
+                url: "/Admin/VehicleModel/Delete",
+                method: "post",
+                dataType: "json",
+                data: { ddto: deletedVehicle },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Araç Silme İşlemi Başarılı',
+                        text: response.message
+                    })
+                }
+            });
+        });
+
+    });
+
+</script>
+
+
+
+

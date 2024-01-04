@@ -1,0 +1,91 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+
+@using RentACar_MVC_UI.Models.Dtos;
+@using RentACar_MVC_UI.Models.Entities
+@model VehicleModelView
+
+
+<link rel="stylesheet" href="~/areas/plugins/jquery/jquery.min.map">
+<link rel="stylesheet" href="~/areas/plugins/jquery/jquery.slim.min.map">
+
+<div class="container">
+    <div class="row" style="margin-top:10px">
+        @foreach (var item in Model.VehicleModels)
+        {
+            <div class="col-md-4" style="margin-top:20px">
+                <div class="card" style="width: 18rem;">
+                    <img src="~/images/Vehicles.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <tr>
+                                <td style="font-weight:bold">Araç Markası</td>
+                                <td>@item.BrandName</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Araç Modeli</td>
+                                <td>@item.ModelName</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Üretim Yılı</td>
+                                <td>@item.Year</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Yakıt Türü</td>
+                                <td>@item.FuelOil</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Vites Tipi</td>
+                                <td>@item.Transmission</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Günlük Ücreti</td>
+                                <td>@item.PerDayPrice</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button id="btnSelect" type="button" class="btn btn-info float-right">Seç</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<script src="/Areas/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/Areas/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/Areas/dist/js/adminlte.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $("button").click(function () {
+            var btn = $(this);
+            var id = $(btn).attr("id");
+            Swal.fire({
+                title: 'Bu Aracı Seçmek İstediğinize Emin Misiniz?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Evet',
+                cancelButtonText: 'Hayır'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Bizi Seçtiğiniz İçin Teşekkürler!',
+                        'Araç Seçme İşleminiz Başarıyla Gerçekleştirilmiştir...',
+                        'success'
+                    )
+                }
+            })
+        });
+    });
+</script>

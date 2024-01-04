@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "RentACar.Model/1.0.0": {
+        "runtime": {
+          "RentACar.Model.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "RentACar.Model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
